@@ -328,6 +328,10 @@ input,select,textarea{background:#fff;border-color:transparent}
 .prot{font-size:.88em;line-height:1.45;margin-top:4px;color:#333}
 .est-tempo .prot,.est-agenda .prot{margin-top:6px}
 @media print{@page{size:A4;margin:15mm 14mm 16mm}.pg{padding:0 3mm!important;box-decoration-break:clone;-webkit-box-decoration-break:clone}}
+/* impressão: só o programa sai no papel (sem selo do Netlify ou outros elementos injetados) */
+@media print{body>*:not(#root),html>*:not(head):not(body){display:none!important}}
+/* medição antes de imprimir: mesma largura útil da folha A4 (210mm − 28mm de margem) */
+.pg.pmeasure{max-width:none!important;margin:0!important;padding:0 3mm!important}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
@@ -1123,6 +1127,25 @@ function PrintView({ ev, onClose }) {
   const c = a.pdf, est = ESTILOS[c.estilo] ? c.estilo : "classico", E = ESTILOS[est];
   const vars = { "--pt": c.corTitulo || E.t, "--pd": c.corDestaque || E.d, "--pl": c.corLinha || E.l };
   const temMarca = c.marca ?? !!E.marca;
+  useEffect(() => {
+    // Antes de imprimir: escolhe o zoom que faz o programa ocupar a folha A4 inteira (uma página só).
+    const ALVO = 266 * 96 / 25.4 * 0.97; // altura útil: 297mm − 31mm de margem, com folga de 3%
+    const antes = () => {
+      const el = document.querySelector(".pv .pg"); if (!el) return;
+      const ini = document.createElement("div"), fim = document.createElement("div");
+      el.before(ini); el.after(fim);
+      el.classList.add("pmeasure");
+      const alt = z => { el.style.zoom = z; el.style.width = (182 / z) + "mm"; return fim.getBoundingClientRect().top - ini.getBoundingClientRect().bottom; };
+      let lo = 0.55, hi = 1.6;
+      if (alt(hi) <= ALVO) lo = hi;
+      else for (let k = 0; k < 14; k++) { const m = (lo + hi) / 2; if (alt(m) <= ALVO) lo = m; else hi = m; }
+      ini.remove(); fim.remove(); el.style.width = "";
+      el.classList.remove("pmeasure"); el.style.zoom = lo.toFixed(3);
+    };
+    const depois = () => { const el = document.querySelector(".pv .pg"); if (el) el.style.zoom = ""; };
+    addEventListener("beforeprint", antes); addEventListener("afterprint", depois);
+    return () => { removeEventListener("beforeprint", antes); removeEventListener("afterprint", depois); depois(); };
+  }, []);
   const box = l => l.length > 0 && html`<div class="pb">${l.map(x => html`<div key=${x.id}>${x.funcao}: <span>${x.nome || "________"}</span></div>`)}</div>`;
   return html`<div class="pv">
     <div class="pvbar"><button class="btn" onClick=${() => window.print()}>🖨 Imprimir / Salvar em PDF</button>${a.isAdmin && html`<button class="btn sec" onClick=${() => setApar(true)}>🎨 Aparência</button>`}<button class="btn sec" onClick=${onClose}>Fechar</button></div>
