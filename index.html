@@ -330,11 +330,16 @@ input,select,textarea{background:#fff;border-color:transparent}
 @media print{@page{size:A4;margin:15mm 14mm 16mm}.pg{padding:0 3mm!important;box-decoration-break:clone;-webkit-box-decoration-break:clone}}
 /* impressão: só o programa sai no papel (sem selo do Netlify ou outros elementos injetados) */
 @media print{body>*:not(#root),html>*:not(head):not(body){display:none!important}}
-/* folha A4 fixa: margens iguais em volta; o miolo (.pin) recebe zoom para ocupar a área útil */
-@media print{@page{size:A4;margin:0}html,body{margin:0;padding:0}
-.pg{width:210mm;height:296mm;max-width:none;margin:0;padding:14mm 14mm 13mm!important;overflow:hidden;display:flex;flex-direction:column}
+/* folha A4: na impressão e na prévia em telas largas a página é a mesma folha (o que se vê é o que sai) */
+@media print{@page{size:A4;margin:0}html,body{margin:0;padding:0}}
+@media print,screen and (min-width:900px){
+.pg{width:210mm;height:296mm;max-width:none;padding:var(--pm,14mm)!important;overflow:hidden;display:flex;flex-direction:column}
 .pin{zoom:var(--pz,1);flex:1;display:flex;flex-direction:column}
-.pin>.pcols{margin-bottom:20px}.pin>.pbx{margin-top:auto}}
+.pin>.pcols{margin-bottom:20px}.pg.pe .pin>.pbx{margin-top:auto}}
+@media print{.pg{margin:0!important;box-shadow:none}}
+@media screen and (min-width:900px){.pv{background:#d5d8de}.pg{margin:24px auto 40px;background:#fff;box-shadow:0 3px 18px rgba(0,0,0,.22)}}
+@media screen and (min-width:1100px){.pv:has(.sheet-bg) .pg{margin-left:max(24px,calc((100vw - 380px - 210mm) / 2))}}
+.pvaviso{color:#ffcf6b;font-size:13px;align-self:center}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
@@ -1074,16 +1079,20 @@ function PainelMidia({ ev, onClose }) {
     </div></div>`;
 }
 
-function AparenciaForm({ onClose }) {
+function AparenciaForm({ onClose, onDraft }) {
   const a = useApp();
   const [c, setC] = useState({ estilo: "classico", ...a.pdf });
   const [busy, setBusy] = useState(false);
   const E = ESTILOS[c.estilo] || ESTILOS.classico;
-  async function muda(patch) {
-    const n = { ...c, ...patch }; setC(n);
+  const timer = React.useRef();
+  async function salvar(n) {
     const { error } = await sb.from("config").upsert({ id: 1, pdf: n, updated_at: new Date().toISOString() });
     if (error) return a.notify(error.message, true);
     await a.load();
+  }
+  function muda(patch) { // a prévia muda na hora; o salvamento espera o ajuste parar (sliders)
+    const n = { ...c, ...patch }; setC(n); onDraft && onDraft(n);
+    clearTimeout(timer.current); timer.current = setTimeout(() => salvar(n), 500);
   }
   async function enviarLogo(e, campo = "logo") {
     const f = e.target.files[0]; if (!f) return; setBusy(true);
@@ -1113,6 +1122,14 @@ function AparenciaForm({ onClose }) {
       <div class="mut" style="margin:4px 0 6px">Imagem própria (de preferência PNG com fundo transparente). Sem ela, usa a logo da igreja.</div>
       <input type="file" accept="image/png,image/jpeg,image/webp" disabled=${busy} onChange=${e => enviarLogo(e, "marcaImg")} />
       ${c.marcaImg && html`<button class="btn sec sm" style="margin-top:8px" onClick=${() => muda({ marcaImg: null })}>Usar a logo da igreja</button>`}</div>
+    <h2>Página impressa</h2>
+    <div class="card">
+      <div class="mut" style="margin-bottom:4px">Em tela de computador, a prévia ao lado é a folha A4 exatamente como sai na impressora.</div>
+      <div class="cor"><span>Margem: <b>${+c.margem || 14} mm</b></span><input type="range" min="5" max="25" step="1" style="width:150px" value=${+c.margem || 14} onInput=${e => muda({ margem: +e.target.value })} /></div>
+      <label class="chk"><input type="checkbox" checked=${c.autoAjuste !== false} onChange=${e => muda({ autoAjuste: e.target.checked })} />Ajustar o tamanho do texto sozinho para ocupar a folha</label>
+      ${c.autoAjuste === false && html`<div class="cor"><span>Tamanho do texto: <b>${+c.tamanho || 100}%</b></span><input type="range" min="60" max="160" step="5" style="width:150px" value=${+c.tamanho || 100} onInput=${e => muda({ tamanho: +e.target.value })} /></div>`}
+      ${chk("equipePe", "Quadro da equipe no pé da folha")}
+      <button class="btn sec sm" style="margin-top:6px" onClick=${() => muda({ margem: null, autoAjuste: null, tamanho: null, equipePe: null })}>Voltar ao padrão</button></div>
     <h2>O que aparece</h2>
     <div class="card">${chk("mostrarChegada", "Horário de chegada")}${chk("mostrarFala", "Texto de fala (boas-vindas)")}${chk("mostrarEquipe", "Quadros da equipe do dia")}</div>
   </${Sheet}>`;
@@ -1127,22 +1144,29 @@ function PrintView({ ev, onClose }) {
   const meio = Math.ceil(eq.length / 2);
   let sec = null;
   const [apar, setApar] = useState(false);
-  const c = a.pdf, est = ESTILOS[c.estilo] ? c.estilo : "classico", E = ESTILOS[est];
-  const vars = { "--pt": c.corTitulo || E.t, "--pd": c.corDestaque || E.d, "--pl": c.corLinha || E.l };
+  const [rasc, setRasc] = useState(null); // rascunho do painel Aparência, para a prévia mudar na hora
+  const [passou, setPassou] = useState(false);
+  const c = rasc || a.pdf, est = ESTILOS[c.estilo] ? c.estilo : "classico", E = ESTILOS[est];
+  const margem = +c.margem || 14, auto = c.autoAjuste !== false, tam = +c.tamanho || 100, pe = c.equipePe !== false;
+  const vars = { "--pt": c.corTitulo || E.t, "--pd": c.corDestaque || E.d, "--pl": c.corLinha || E.l, "--pm": margem + "mm" };
   const temMarca = c.marca ?? !!E.marca;
   useEffect(() => {
-    // Calcula o zoom que faz o programa ocupar a área útil da folha A4 (182 × 269 mm), numa página só.
-    const ALVO = 269 * 96 / 25.4 * 0.98;
+    // Zoom do miolo: automático (ocupa a área útil da folha A4, numa página só) ou o tamanho escolhido.
+    const W = 210 - 2 * margem, ALVO = (296 - 2 * margem) * 96 / 25.4;
     const medir = () => {
       const pg = document.querySelector(".pv .pg"), pin = pg && pg.querySelector(".pin"); if (!pin) return;
       const ini = document.createElement("div"), fim = document.createElement("div");
-      pin.before(ini); pin.after(fim);
-      const alt = z => { pin.style.zoom = z; pin.style.width = (182 / z) + "mm"; return fim.getBoundingClientRect().top - ini.getBoundingClientRect().bottom; };
-      let lo = 0.55, hi = 1.7;
-      if (alt(hi) <= ALVO) lo = hi;
-      else for (let k = 0; k < 14; k++) { const m = (lo + hi) / 2; if (alt(m) <= ALVO) lo = m; else hi = m; }
-      ini.remove(); fim.remove(); pin.style.zoom = ""; pin.style.width = "";
-      pg.style.setProperty("--pz", lo.toFixed(3));
+      pin.before(ini); pin.after(fim); pin.style.flex = "none";
+      const alt = z => { pin.style.zoom = z; pin.style.width = (W / z) + "mm"; return fim.getBoundingClientRect().top - ini.getBoundingClientRect().bottom; };
+      let z = tam / 100;
+      if (auto) {
+        let lo = 0.5, hi = 1.8;
+        if (alt(hi) <= ALVO * 0.98) lo = hi;
+        else for (let k = 0; k < 14; k++) { const m = (lo + hi) / 2; if (alt(m) <= ALVO * 0.98) lo = m; else hi = m; }
+        z = lo; setPassou(false);
+      } else setPassou(alt(z) > ALVO);
+      ini.remove(); fim.remove(); pin.style.zoom = ""; pin.style.width = ""; pin.style.flex = "";
+      pg.style.setProperty("--pz", z.toFixed(3));
     };
     medir();
     document.fonts && document.fonts.ready.then(medir);
@@ -1153,8 +1177,8 @@ function PrintView({ ev, onClose }) {
   });
   const box = l => l.length > 0 && html`<div class="pb">${l.map(x => html`<div key=${x.id}>${x.funcao}: <span>${x.nome || "________"}</span></div>`)}</div>`;
   return html`<div class="pv">
-    <div class="pvbar"><button class="btn" onClick=${() => window.print()}>🖨 Imprimir / Salvar em PDF</button>${a.isAdmin && html`<button class="btn sec" onClick=${() => setApar(true)}>🎨 Aparência</button>`}<button class="btn sec" onClick=${onClose}>Fechar</button></div>
-    <div class=${"pg est-" + est} style=${vars}>
+    <div class="pvbar"><button class="btn" onClick=${() => window.print()}>🖨 Imprimir / Salvar em PDF</button>${a.isAdmin && html`<button class="btn sec" onClick=${() => setApar(true)}>🎨 Aparência</button>`}<button class="btn sec" onClick=${onClose}>Fechar</button>${passou && html`<span class="pvaviso">⚠ Passou de uma folha: diminua o tamanho do texto ou a margem</span>`}</div>
+    <div class=${"pg est-" + est + (pe ? " pe" : "")} style=${vars}>
       ${temMarca && html`<img class=${"wm" + (c.marcaImg ? "" : " pad")} src=${c.marcaImg || LOGO2} alt="" />`}
       <div class="pin"><div class="pgh"><div><div class="pt">${ev.titulo}</div><div class="pd">${dataTxt}</div>
         <div class="pdn"><b>${d.getDate()}</b><div><span>${d.toLocaleDateString("pt-BR", { month: "long" })}</span><span>${d.getFullYear()}</span></div><em>${d.toLocaleDateString("pt-BR", { weekday: "short" }).replace(".", "")}</em></div>
@@ -1172,7 +1196,7 @@ function PrintView({ ev, onClose }) {
       })}</div>
       ${eq.length > 0 && c.mostrarEquipe !== false && html`<div class="pbx">${box(eq.slice(0, meio))}${box(eq.slice(meio))}</div>`}</div>
     </div>
-    ${apar && html`<${AparenciaForm} onClose=${() => setApar(false)} />`}</div>`;
+    ${apar && html`<${AparenciaForm} onDraft=${setRasc} onClose=${() => setApar(false)} />`}</div>`;
 }
 
 /* ---------- patrimônio ---------- */
