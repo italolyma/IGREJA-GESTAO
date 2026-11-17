@@ -271,24 +271,54 @@ input,select,textarea{background:#fff;border-color:transparent}
 .est-tempo .pbx{display:block;margin-top:12px}
 .est-tempo .pb{border:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;font-size:12px;line-height:1.4}
 .est-tempo .pb>div{background:rgba(240,238,232,.9);border-radius:999px;padding:4px 13px}
-/* estilo: barra lateral */
-.pg.est-lateral{display:grid;grid-template-columns:34% 1fr;grid-template-rows:auto 1fr;align-items:start;padding:0;min-height:1060px;background:linear-gradient(to right,var(--pt) 34%,#fff 34%)}
-.est-lateral .pgh{grid-column:1;grid-row:1;flex-direction:column-reverse!important;align-items:flex-start;gap:18px;padding:30px 24px 0;margin-bottom:0}
-.est-lateral .pgh img{width:116px!important;height:116px;object-fit:cover;border-radius:50%;border:3px solid rgba(255,255,255,.25)}
-.est-lateral .pt{color:#fff;font-size:32px;line-height:1.08}
-.est-lateral .pd{color:var(--pd);font-size:14px;letter-spacing:1.5px;margin-top:10px}
-.est-lateral .pc{color:#fff;opacity:.92;margin-top:20px;font-size:12.5px}
-.est-lateral .pbx{grid-column:1;grid-row:2;grid-template-columns:1fr!important;gap:0;margin-top:26px;padding:0 24px 30px}
-.est-lateral .pb{border:0;border-top:1px solid rgba(255,255,255,.22);border-radius:0;padding:12px 0;color:#fff;font-weight:400;font-size:12.5px;line-height:1.35}
-.est-lateral .pb>div{margin-bottom:8px}
-.est-lateral .pb span{display:block;font-weight:700;font-size:14px}
-.est-lateral .pcols{grid-column:2;grid-row:1/3;columns:1!important;padding:30px 28px}
-.est-lateral .ps{font-size:14px;font-weight:700;letter-spacing:2.5px;color:var(--pt)}
-.est-lateral .pred,.est-lateral .pcols .pn{color:color-mix(in srgb,var(--pd) 70%,#000)}
-.est-lateral .pn{background:none;padding:0}
-.est-lateral .wm{left:67%;width:44%}
-@media(max-width:600px){.pg.est-lateral{display:block;background:#fff}.est-lateral .pgh,.est-lateral .pbx{background:var(--pt)}.est-tempo .pcols{margin-left:60px}.est-tempo .phh{left:-92px;width:54px;font-size:12px}}
-@media print{.wm{position:fixed;top:50%;transform:translate(-50%,-50%)}.pg.est-lateral{display:grid!important;min-height:275mm;background:linear-gradient(to right,var(--pt) 34%,#fff 34%)!important}}
+.pdn{display:none}
+.psf{font-size:24px}
+.est-faixa .psf{font-size:22px}
+/* linha do tempo: refinamentos */
+.est-tempo .pbx{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;font-size:12px;font-weight:700}
+.est-tempo .pb{display:contents}
+.est-tempo .pbx .pb>div{background:rgba(240,238,232,.9);border-radius:999px;padding:4px 13px}
+.est-tempo .pgh{margin-bottom:12px}
+.est-tempo .pt{font-weight:800;letter-spacing:0}
+.est-tempo .pd{background:var(--pd)}
+.est-tempo .psf{font-size:22px;letter-spacing:2px}
+.est-tempo .prot{background:rgba(240,238,232,.85);border-left:4px solid var(--pd);border-radius:0 12px 12px 0;padding:10px 14px;margin-bottom:8px}
+.est-tempo .pl1{display:flex;align-items:center;gap:8px}
+.est-tempo .ptit{flex:1}
+.est-tempo .pdash{display:none}
+.est-tempo .pdur{order:3;font-size:11px;color:#777;white-space:nowrap}
+.est-tempo .pn{background:color-mix(in srgb,var(--pd) 16%,#fff);border-radius:999px;padding:1px 10px;font-style:normal;font-size:12px}
+.est-tempo .pcols::after{content:"";display:block;width:13px;height:13px;border-radius:50%;background:var(--pt);margin:6px 0 0 -33px}
+/* estilo: agenda */
+.est-agenda .pgh{align-items:flex-start;margin-bottom:20px}
+.est-agenda .pgh>div{display:flex;flex-direction:column;flex:1}
+.est-agenda .pdn{display:flex;align-items:flex-end;gap:16px;order:-1;margin-bottom:14px}
+.est-agenda .pdn b{font-size:118px;line-height:.78;color:var(--pd);font-weight:800;letter-spacing:-4px}
+.est-agenda .pdn div{display:flex;flex-direction:column;font-size:26px;font-weight:800;color:var(--pt);line-height:1.05}
+.est-agenda .pdn div span+span{color:#8a7a66;font-weight:400}
+.est-agenda .pdn em{margin-left:auto;margin-right:20px;font-style:normal;font-size:26px;font-weight:800;color:#8a7a66}
+.est-agenda .pd{display:none}
+.est-agenda .pt{font-size:22px;letter-spacing:3px;font-weight:700}
+.est-agenda .pc{margin-top:8px;font-size:12.5px}
+.est-agenda .pgh img{width:96px!important;height:96px;object-fit:cover;border-radius:50%}
+.pg.est-agenda{font-size:13.5px;line-height:1.35}
+.est-agenda .pcols{column-gap:22px}
+.est-agenda .prow{padding:0;gap:0;margin-bottom:5px;background:rgba(243,240,234,.88);border-radius:999px;align-items:stretch;overflow:hidden}
+.est-agenda .phh{width:66px;background:var(--pt);color:#fff;font-weight:700;font-size:12.5px;display:flex;align-items:center;justify-content:center;padding:0;border-radius:999px;flex:none;min-height:34px}
+.est-agenda .prc{border-bottom:0;padding:7px 14px 7px 10px;align-self:center}
+.est-agenda .prow:has(.prc>div+div){border-radius:18px}
+.est-agenda .prow:has(.prc>div+div) .phh{border-radius:18px}
+.est-agenda .ps{font-size:12.5px;font-weight:800;letter-spacing:3px;color:var(--pd);margin:16px 0 7px}
+.est-agenda .psf{font-size:19px;letter-spacing:1px;color:var(--pt);margin-top:0}
+.est-agenda .prs{text-align:left;border-bottom:0;margin-bottom:4px;padding-bottom:0}
+.est-agenda .prot{font-size:12.5px;line-height:1.45;border-left:4px solid var(--pd);padding-left:12px;margin-bottom:12px}
+.est-agenda .pn{background:none;padding:0;font-style:normal}
+.est-agenda .pbx{margin-top:18px;gap:18px}
+.est-agenda .pb{border:0;border-top:3px solid var(--pt);border-radius:0;padding:10px 0 0;font-size:12.5px;line-height:1.4;font-weight:400}
+.est-agenda .pb>div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dotted #c9c3b6;padding:4px 0}
+.est-agenda .pb span{font-weight:700}
+@media(max-width:600px){.est-tempo .pcols{margin-left:60px}.est-tempo .phh{left:-92px;width:54px;font-size:12px}.est-agenda .pdn b{font-size:84px}}
+@media print{.wm{position:fixed;top:50%;transform:translate(-50%,-50%)}}
 .pv .sheet-bg{z-index:60}
 .cor{display:flex;align-items:center;justify-content:space-between;padding:6px 0}
 .cor input{width:56px;height:36px;padding:2px;border:1px solid var(--borda);border-radius:8px}
@@ -330,7 +360,7 @@ const ESTILOS = {
   classico: { nome: "Clássico", desc: "Duas colunas, linhas salmão e destaques vermelhos", t: "#1f1a5c", d: "#e01010", l: "#f4b9a4" },
   faixa: { nome: "Faixa escura", desc: "Cabeçalho em faixa azul-marinho, detalhes dourados", t: "#17274a", d: "#b08a45", l: "#d9d2c2" },
   tempo: { nome: "Linha do tempo", desc: "Horários numa linha vertical com marcadores, equipe em etiquetas e marca d'água", t: "#1d3b53", d: "#e8623d", l: "#cfd8de", marca: true },
-  lateral: { nome: "Barra lateral", desc: "Faixa escura à esquerda com logo, data e equipe; programa à direita, com marca d'água", t: "#17274a", d: "#c9a45c", l: "#e3e0d8", marca: true },
+  agenda: { nome: "Agenda", desc: "Dia em número gigante, horários em pílulas escuras e marca d'água", t: "#1c1c1c", d: "#f2613a", l: "#d9d4c8", marca: true },
 };
 const FUNCOES_PADRAO = ["ANCIÃO DO MÊS", "ANCIÃO DO DIA", "GESTÃO DE CULTO", "MIN. DE LOUVOR", "MENSAGEM MUSICAL", "MÍDIA", "SOM"];
 const SECOES_PADRAO = ["08:45 BOAS-VINDAS", "09:00 ESCOLA SABATINA", "10:00 CULTO DIVINO"];
@@ -1096,19 +1126,20 @@ function PrintView({ ev, onClose }) {
     <div class=${"pg est-" + est} style=${vars}>
       ${temMarca && html`<img class=${"wm" + (c.marcaImg ? "" : " pad")} src=${c.marcaImg || LOGO2} alt="" />`}
       <div class="pgh"><div><div class="pt">${ev.titulo}</div><div class="pd">${dataTxt}</div>
+        <div class="pdn"><b>${d.getDate()}</b><div><span>${d.toLocaleDateString("pt-BR", { month: "long" })}</span><span>${d.getFullYear()}</span></div><em>${d.toLocaleDateString("pt-BR", { weekday: "short" }).replace(".", "")}</em></div>
         ${ev.chegada && c.mostrarChegada !== false && html`<div class="pc">Recomendação importante:<br /><i>Horário de chegada – ${ev.chegada}H</i></div>`}</div>
         <img src=${c.logo || LOGO} alt="" /></div>
       <div class="pcols">${itens.map(i => {
         const cab = i.secao && i.secao !== sec; if (i.secao) sec = i.secao;
         const resp = i.responsavel_id ? a.nome(i.responsavel_id) : i.responsavel_nome;
         if (i.roteiro && c.mostrarFala !== false) return html`<${React.Fragment} key=${i.id}>${cab && html`<div class="ps">${i.secao}</div>`}
-          <div class="ps" style="font-size:24px">${i.horario ? i.horario + "H " : ""}${i.titulo}</div>
+          <div class="ps psf">${i.horario ? i.horario + "H " : ""}${i.titulo}</div>
           <div class="prs">${i.titulo}${i.duracao_min ? ` (${i.duracao_min}’)` : ""} ${resp && html`<span class="pn">${resp}</span>`}</div>
           ${(i.obs || "").split("\n").filter(Boolean).map((l, k) => html`<div key=${k}>${marca(l)}</div>`)}
           <div class="prot">${i.roteiro.split("\n").filter(Boolean).map((l, k) => html`<p key=${k}>${l}</p>`)}</div></${React.Fragment}>`;
         return html`<${React.Fragment} key=${i.id}>${cab && html`<div class="ps">${i.secao}</div>`}
           <div class="prow"><div class="phh">${i.horario ? i.horario + "H" : ""}</div><div class="prc">
-            <div>${marca(i.titulo)}${i.duracao_min ? ` (${i.duracao_min}’)` : ""}${resp && html` – <span class="pn">${resp}</span>`}</div>
+            <div class="pl1"><span class="ptit">${marca(i.titulo)}</span>${i.duracao_min ? html`<span class="pdur"> (${i.duracao_min}’)</span>` : ""}${resp && html`<span class="pdash"> – </span><span class="pn">${resp}</span>`}</div>
             ${(i.obs || "").split("\n").filter(Boolean).map((l, k) => html`<div key=${k}>${marca(l)}</div>`)}
             ${i.roteiro && c.mostrarFala !== false && html`<div class="prot">${i.roteiro.split("\n").filter(Boolean).map((l, k) => html`<p key=${k}>${l}</p>`)}</div>`}
           </div></div></${React.Fragment}>`;
