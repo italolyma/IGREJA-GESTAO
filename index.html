@@ -330,8 +330,11 @@ input,select,textarea{background:#fff;border-color:transparent}
 @media print{@page{size:A4;margin:15mm 14mm 16mm}.pg{padding:0 3mm!important;box-decoration-break:clone;-webkit-box-decoration-break:clone}}
 /* impressão: só o programa sai no papel (sem selo do Netlify ou outros elementos injetados) */
 @media print{body>*:not(#root),html>*:not(head):not(body){display:none!important}}
-/* medição antes de imprimir: mesma largura útil da folha A4 (210mm − 28mm de margem) */
-.pg.pmeasure{max-width:none!important;margin:0!important;padding:0 3mm!important}
+/* folha A4 fixa: margens iguais em volta; o miolo (.pin) recebe zoom para ocupar a área útil */
+@media print{@page{size:A4;margin:0}html,body{margin:0;padding:0}
+.pg{width:210mm;height:296mm;max-width:none;margin:0;padding:14mm 14mm 13mm!important;overflow:hidden;display:flex;flex-direction:column}
+.pin{zoom:var(--pz,1);flex:1;display:flex;flex-direction:column}
+.pin>.pcols{margin-bottom:20px}.pin>.pbx{margin-top:auto}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
@@ -1128,30 +1131,32 @@ function PrintView({ ev, onClose }) {
   const vars = { "--pt": c.corTitulo || E.t, "--pd": c.corDestaque || E.d, "--pl": c.corLinha || E.l };
   const temMarca = c.marca ?? !!E.marca;
   useEffect(() => {
-    // Antes de imprimir: escolhe o zoom que faz o programa ocupar a folha A4 inteira (uma página só).
-    const ALVO = 266 * 96 / 25.4 * 0.97; // altura útil: 297mm − 31mm de margem, com folga de 3%
-    const antes = () => {
-      const el = document.querySelector(".pv .pg"); if (!el) return;
+    // Calcula o zoom que faz o programa ocupar a área útil da folha A4 (182 × 269 mm), numa página só.
+    const ALVO = 269 * 96 / 25.4 * 0.98;
+    const medir = () => {
+      const pg = document.querySelector(".pv .pg"), pin = pg && pg.querySelector(".pin"); if (!pin) return;
       const ini = document.createElement("div"), fim = document.createElement("div");
-      el.before(ini); el.after(fim);
-      el.classList.add("pmeasure");
-      const alt = z => { el.style.zoom = z; el.style.width = (182 / z) + "mm"; return fim.getBoundingClientRect().top - ini.getBoundingClientRect().bottom; };
-      let lo = 0.55, hi = 1.6;
+      pin.before(ini); pin.after(fim);
+      const alt = z => { pin.style.zoom = z; pin.style.width = (182 / z) + "mm"; return fim.getBoundingClientRect().top - ini.getBoundingClientRect().bottom; };
+      let lo = 0.55, hi = 1.7;
       if (alt(hi) <= ALVO) lo = hi;
       else for (let k = 0; k < 14; k++) { const m = (lo + hi) / 2; if (alt(m) <= ALVO) lo = m; else hi = m; }
-      ini.remove(); fim.remove(); el.style.width = "";
-      el.classList.remove("pmeasure"); el.style.zoom = lo.toFixed(3);
+      ini.remove(); fim.remove(); pin.style.zoom = ""; pin.style.width = "";
+      pg.style.setProperty("--pz", lo.toFixed(3));
     };
-    const depois = () => { const el = document.querySelector(".pv .pg"); if (el) el.style.zoom = ""; };
-    addEventListener("beforeprint", antes); addEventListener("afterprint", depois);
-    return () => { removeEventListener("beforeprint", antes); removeEventListener("afterprint", depois); depois(); };
-  }, []);
+    medir();
+    document.fonts && document.fonts.ready.then(medir);
+    const pg = document.querySelector(".pv .pg");
+    pg && pg.addEventListener("load", medir, true); // logo/imagens carregadas mudam a altura
+    addEventListener("beforeprint", medir);
+    return () => { removeEventListener("beforeprint", medir); pg && pg.removeEventListener("load", medir, true); };
+  });
   const box = l => l.length > 0 && html`<div class="pb">${l.map(x => html`<div key=${x.id}>${x.funcao}: <span>${x.nome || "________"}</span></div>`)}</div>`;
   return html`<div class="pv">
     <div class="pvbar"><button class="btn" onClick=${() => window.print()}>🖨 Imprimir / Salvar em PDF</button>${a.isAdmin && html`<button class="btn sec" onClick=${() => setApar(true)}>🎨 Aparência</button>`}<button class="btn sec" onClick=${onClose}>Fechar</button></div>
     <div class=${"pg est-" + est} style=${vars}>
       ${temMarca && html`<img class=${"wm" + (c.marcaImg ? "" : " pad")} src=${c.marcaImg || LOGO2} alt="" />`}
-      <div class="pgh"><div><div class="pt">${ev.titulo}</div><div class="pd">${dataTxt}</div>
+      <div class="pin"><div class="pgh"><div><div class="pt">${ev.titulo}</div><div class="pd">${dataTxt}</div>
         <div class="pdn"><b>${d.getDate()}</b><div><span>${d.toLocaleDateString("pt-BR", { month: "long" })}</span><span>${d.getFullYear()}</span></div><em>${d.toLocaleDateString("pt-BR", { weekday: "short" }).replace(".", "")}</em></div>
         ${ev.chegada && c.mostrarChegada !== false && html`<div class="pc">Recomendação importante:<br /><i>Horário de chegada – ${ev.chegada}H</i></div>`}</div>
         <img src=${c.logo || LOGO} alt="" /></div>
@@ -1165,7 +1170,7 @@ function PrintView({ ev, onClose }) {
             ${i.roteiro && c.mostrarFala !== false && html`<div class="prot">${i.roteiro.split("\n").filter(Boolean).map((l, k) => html`<p key=${k}>${l}</p>`)}</div>`}
           </div></div></${React.Fragment}>`;
       })}</div>
-      ${eq.length > 0 && c.mostrarEquipe !== false && html`<div class="pbx">${box(eq.slice(0, meio))}${box(eq.slice(meio))}</div>`}
+      ${eq.length > 0 && c.mostrarEquipe !== false && html`<div class="pbx">${box(eq.slice(0, meio))}${box(eq.slice(meio))}</div>`}</div>
     </div>
     ${apar && html`<${AparenciaForm} onClose=${() => setApar(false)} />`}</div>`;
 }
