@@ -325,6 +325,8 @@ input,select,textarea{background:#fff;border-color:transparent}
 .chk{display:flex;align-items:center;gap:10px;padding:7px 0;margin:0;color:var(--txt);font-size:15px}
 .chk input{width:20px;height:20px}
 @media(min-width:1100px){.pv .sheet-bg{background:none;justify-content:flex-end;align-items:stretch;pointer-events:none}.pv .sheet{pointer-events:auto;max-width:380px;max-height:none;border-radius:0;box-shadow:-6px 0 24px rgba(0,0,0,.18)}}
+.prot{font-size:.88em;line-height:1.45;margin-top:4px;color:#333}
+.est-tempo .prot,.est-agenda .prot{margin-top:6px}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
@@ -1132,11 +1134,6 @@ function PrintView({ ev, onClose }) {
       <div class="pcols">${itens.map(i => {
         const cab = i.secao && i.secao !== sec; if (i.secao) sec = i.secao;
         const resp = i.responsavel_id ? a.nome(i.responsavel_id) : i.responsavel_nome;
-        if (i.roteiro && c.mostrarFala !== false) return html`<${React.Fragment} key=${i.id}>${cab && html`<div class="ps">${i.secao}</div>`}
-          <div class="ps psf">${i.horario ? i.horario + "H " : ""}${i.titulo}</div>
-          <div class="prs">${i.titulo}${i.duracao_min ? ` (${i.duracao_min}’)` : ""} ${resp && html`<span class="pn">${resp}</span>`}</div>
-          ${(i.obs || "").split("\n").filter(Boolean).map((l, k) => html`<div key=${k}>${marca(l)}</div>`)}
-          <div class="prot">${i.roteiro.split("\n").filter(Boolean).map((l, k) => html`<p key=${k}>${l}</p>`)}</div></${React.Fragment}>`;
         return html`<${React.Fragment} key=${i.id}>${cab && html`<div class="ps">${i.secao}</div>`}
           <div class="prow"><div class="phh">${i.horario ? i.horario + "H" : ""}</div><div class="prc">
             <div class="pl1"><span class="ptit">${marca(i.titulo)}</span>${i.duracao_min ? html`<span class="pdur"> (${i.duracao_min}’)</span>` : ""}${resp && html`<span class="pdash"> – </span><span class="pn">${resp}</span>`}</div>
