@@ -174,24 +174,6 @@ input,select,textarea{background:#fff;border-color:transparent}
 .pmf.lk{background:#6b3fa0}
 .pmok{width:36px;height:36px;border-radius:50%;border:2px solid #3a4a60;background:none;color:#3ecf6e;font-size:18px;cursor:pointer}
 @media(max-width:700px){.pmi{grid-template-columns:50px 1fr 36px;gap:8px}.pmcues{grid-template-columns:1fr}}
-.pg{max-width:860px;font-size:15px;line-height:1.45;padding:34px 30px}
-.pgh{margin-bottom:26px;align-items:stretch}
-.pgh img{width:48%;object-fit:cover}
-.pt{font-size:46px;line-height:1;letter-spacing:.5px}
-.pd{font-size:16px;margin-top:8px;color:#1f2a5c}
-.pc{font-size:14px;margin-top:22px;line-height:1.5}
-.pcols{column-gap:34px}
-.ps{font-size:20px;letter-spacing:.5px;margin:20px 0 6px;font-weight:400;color:#111}
-.prow{padding:6px 0;gap:10px}
-.phh{width:64px;font-size:14px;padding-top:1px}
-.prc{border-bottom:2px solid #f4b9a4;padding-bottom:7px}
-.prs{text-align:center;border-bottom:2px solid #f4b9a4;padding-bottom:7px;margin-bottom:12px;color:#1f2a5c}
-.prot{font-size:14.5px;line-height:1.55;margin:0 0 6px}
-.prot p{margin:0 0 6px}
-.pbx{margin-top:30px;gap:24px;align-items:start}
-.pb{font-size:14.5px;border:2px solid #d9534f;border-radius:10px;padding:14px 18px;line-height:1.8}
-@media(max-width:600px){.pg{font-size:13px;padding:20px 16px}.pt{font-size:30px}.ps{font-size:17px}}
-@media print{.pg{font-size:15px;padding:0}.pt{font-size:46px}.ps{font-size:20px}.pcols{columns:2!important}.pgh{flex-direction:row!important}.pgh img{width:48%!important}.pbx{grid-template-columns:1fr 1fr!important}}
 .pm{background:var(--bg);color:var(--txt)}
 .pmh{background:var(--bg);border-bottom:1px solid var(--borda)}
 .pmclock{font-family:"Roboto Slab",Georgia,serif;font-weight:300;font-size:30px}
@@ -234,6 +216,71 @@ input,select,textarea{background:#fff;border-color:transparent}
 .pb span{color:#e01010}
 @media(max-width:600px){.pcols{columns:1}.pgh{flex-direction:column}.pgh img{width:100%}.pbx{grid-template-columns:1fr}.pt{font-size:26px}}
 @media print{@page{size:A4;margin:10mm}body{background:#fff}.top,.nav,main,.sheet-bg,.pvbar,.toast{display:none!important}.pv{position:static;overflow:visible}.pg{padding:0;max-width:none}}
+.pg{max-width:860px;font-size:15px;line-height:1.45;padding:34px 30px}
+.pgh{margin-bottom:26px;align-items:stretch}
+.pgh img{width:48%;object-fit:cover}
+.pt{font-size:40px;line-height:1.05;letter-spacing:.5px}
+.pd{font-size:16px;margin-top:8px;color:#1f2a5c}
+.pc{font-size:14px;margin-top:22px;line-height:1.5}
+.pcols{column-gap:34px}
+.ps{font-size:20px;letter-spacing:.5px;margin:20px 0 6px;font-weight:400;color:#111}
+.prow{padding:6px 0;gap:10px}
+.phh{width:64px;font-size:14px;padding-top:1px}
+.prc{border-bottom:2px solid #f4b9a4;padding-bottom:7px}
+.prs{text-align:center;border-bottom:2px solid #f4b9a4;padding-bottom:7px;margin-bottom:12px;color:#1f2a5c}
+.prot{font-size:14.5px;line-height:1.55;margin:0 0 6px}
+.prot p{margin:0 0 6px}
+.pbx{margin-top:30px;gap:24px;align-items:start}
+.pb{font-size:14.5px;border:2px solid #d9534f;border-radius:10px;padding:14px 18px;line-height:1.8}
+@media(max-width:600px){.pg{font-size:13px;padding:20px 16px}.pt{font-size:30px}.ps{font-size:17px}}
+@media print{.pg{font-size:15px;padding:0;max-width:none}.pt{font-size:40px}.ps{font-size:20px}.pcols{columns:2!important}.pgh{flex-direction:row!important}.pgh img{width:48%!important}.pbx{grid-template-columns:1fr 1fr!important}}
+.pt,.pd,.prs{color:var(--pt)}
+.pred,.pc i,.pb span{color:var(--pd)}
+.pb{border-color:var(--pd)}
+.prc,.prs{border-bottom-color:var(--pl)}
+.pn{color:color-mix(in srgb,var(--pd) 60%,#000)}
+/* estilo: faixa escura */
+.est-faixa .pgh{background:var(--pt);padding:24px 26px;border-radius:16px;align-items:center}
+.est-faixa .pt,.est-faixa .pd,.est-faixa .pc{color:#fff}
+.est-faixa .pd{opacity:.85}
+.est-faixa .pgh img{width:150px!important;height:150px;object-fit:cover;border-radius:14px}
+.est-faixa .ps{color:var(--pt);font-weight:700;font-size:17px;letter-spacing:1.5px}
+.est-faixa .pb{border:0;background:#f1eee6;border-left:5px solid var(--pd);border-radius:8px}
+.est-faixa .pn{background:none;padding:0}
+/* estilo: minimalista */
+.est-minimal .pcols{columns:1!important}
+.pg.est-minimal{font-size:13px;line-height:1.35}
+.est-minimal .prow{padding:3px 0}
+.est-minimal .prot{font-size:12.5px;line-height:1.45}
+.est-minimal .prc{padding-bottom:4px}
+.est-minimal .pgh{border-bottom:2px solid var(--pt);padding-bottom:16px;align-items:flex-end}
+.est-minimal .pgh img{width:110px!important;height:110px;object-fit:cover;border-radius:50%}
+.est-minimal .pt{font-size:34px;font-weight:700}
+.est-minimal .ps{font-size:13px;font-weight:700;letter-spacing:3px;margin-top:22px}
+.est-minimal .prc{border-bottom-width:1px}
+.est-minimal .pn{background:none;padding:0;font-style:normal}
+.est-minimal .pb{border:0;border-top:2px solid var(--pt);border-radius:0;padding:10px 0;font-weight:400}
+.est-minimal .pb span{font-weight:700}
+/* estilo: compacto */
+.pg.est-compacto{font-size:12px;line-height:1.3}
+.est-compacto .pgh{margin-bottom:12px}
+.est-compacto .pgh img{width:26%!important}
+.est-compacto .pt{font-size:28px}
+.est-compacto .pd{font-size:13px;margin-top:4px}
+.est-compacto .pc{font-size:11.5px;margin-top:8px}
+.est-compacto .ps{font-size:13.5px;font-weight:700;margin:10px 0 2px}
+.est-compacto .prow{padding:2px 0}
+.est-compacto .phh{width:50px;font-size:11.5px}
+.est-compacto .prc{border-bottom-width:1px;padding-bottom:3px}
+.est-compacto .prot{font-size:11.5px;line-height:1.4}
+.est-compacto .pbx{margin-top:14px;gap:12px}
+.est-compacto .pb{font-size:11.5px;padding:8px 12px;line-height:1.5;border-width:1px}
+.pv .sheet-bg{z-index:60}
+.cor{display:flex;align-items:center;justify-content:space-between;padding:6px 0}
+.cor input{width:56px;height:36px;padding:2px;border:1px solid var(--borda);border-radius:8px}
+.chk{display:flex;align-items:center;gap:10px;padding:7px 0;margin:0;color:var(--txt);font-size:15px}
+.chk input{width:20px;height:20px}
+@media(min-width:1100px){.pv .sheet-bg{background:none;justify-content:flex-end;align-items:stretch;pointer-events:none}.pv .sheet{pointer-events:auto;max-width:380px;max-height:none;border-radius:0;box-shadow:-6px 0 24px rgba(0,0,0,.18)}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
@@ -265,6 +312,12 @@ const STATUS = { pendente: "Pendente", confirmado: "Confirmado", recusado: "Recu
 const PAPEIS = { admin: "Administrador", lider: "Líder", membro: "Membro" };
 const PROGRAMA_PADRAO = ["Prelúdio", "Boas-vindas", "Hino de abertura", "Oração inicial", "Louvor", "Leitura bíblica", "Momento de oração", "Mensagem musical", "Sermão", "Hino final", "Oração final"];
 
+const ESTILOS = {
+  classico: { nome: "Clássico", desc: "Duas colunas, linhas salmão e destaques vermelhos", t: "#1f1a5c", d: "#e01010", l: "#f4b9a4" },
+  faixa: { nome: "Faixa escura", desc: "Cabeçalho em faixa azul-marinho, detalhes dourados", t: "#17274a", d: "#b08a45", l: "#d9d2c2" },
+  minimal: { nome: "Minimalista", desc: "Uma coluna, preto e branco, sem molduras", t: "#111111", d: "#111111", l: "#bbbbbb" },
+  compacto: { nome: "Compacto", desc: "Letra pequena, para programas longos caberem em uma página", t: "#17274a", d: "#c0392b", l: "#cccccc" },
+};
 const FUNCOES_PADRAO = ["ANCIÃO DO MÊS", "ANCIÃO DO DIA", "GESTÃO DE CULTO", "MIN. DE LOUVOR", "MENSAGEM MUSICAL", "MÍDIA", "SOM"];
 const SECOES_PADRAO = ["08:45 BOAS-VINDAS", "09:00 ESCOLA SABATINA", "10:00 CULTO DIVINO"];
 const RED = /^(HINO|V[ÍI]DEO|SLIDE|(?:\d[ªa]\s*)?MENS(?:AGEM|\.)?\s*MUSICAL)/i;
@@ -381,10 +434,11 @@ function Main({ uid }) {
       sb.from("modelos").select("*").order("nome"),
       sb.from("modelo_itens").select("*").order("ordem"),
       sb.from("modelo_funcoes").select("*").order("ordem"),
+      sb.from("config").select("*"),
     ]);
     const err = q.find(r => r.error); if (err) { notify(err.error.message, true); return; }
-    const [profiles, ministerios, membros, eventos, escalas, patrimonio, itens, anexos, equipe, modelos, modeloItens, modeloFuncoes] = q.map(r => r.data);
-    setD({ profiles, ministerios, membros, eventos, escalas, patrimonio, itens, anexos, equipe, modelos, modeloItens, modeloFuncoes });
+    const [profiles, ministerios, membros, eventos, escalas, patrimonio, itens, anexos, equipe, modelos, modeloItens, modeloFuncoes, config] = q.map(r => r.data);
+    setD({ profiles, ministerios, membros, eventos, escalas, patrimonio, itens, anexos, equipe, modelos, modeloItens, modeloFuncoes, pdf: (config && config[0] && config[0].pdf) || {} });
   }, [notify]);
   useEffect(() => { load(); }, [load]);
   useEffect(() => { const h = () => setTab((location.hash || "#inicio").slice(1)); addEventListener("hashchange", h); return () => removeEventListener("hashchange", h); }, []);
@@ -966,6 +1020,45 @@ function PainelMidia({ ev, onClose }) {
     </div></div>`;
 }
 
+function AparenciaForm({ onClose }) {
+  const a = useApp();
+  const [c, setC] = useState({ estilo: "classico", ...a.pdf });
+  const [busy, setBusy] = useState(false);
+  const E = ESTILOS[c.estilo] || ESTILOS.classico;
+  async function muda(patch) {
+    const n = { ...c, ...patch }; setC(n);
+    const { error } = await sb.from("config").upsert({ id: 1, pdf: n, updated_at: new Date().toISOString() });
+    if (error) return a.notify(error.message, true);
+    await a.load();
+  }
+  async function enviarLogo(e) {
+    const f = e.target.files[0]; if (!f) return; setBusy(true);
+    const path = `logo-${Date.now()}.${(f.name.split(".").pop() || "png").toLowerCase()}`;
+    const up = await sb.storage.from("publico").upload(path, f, { contentType: f.type });
+    if (up.error) a.notify(up.error.message, true);
+    else { await muda({ logo: sb.storage.from("publico").getPublicUrl(path).data.publicUrl }); a.notify("Imagem trocada"); }
+    setBusy(false);
+  }
+  const cor = (k, rotulo, padrao) => html`<div class="cor"><span>${rotulo}</span><input type="color" value=${c[k] || padrao} onChange=${e => muda({ [k]: e.target.value })} /></div>`;
+  const chk = (k, rotulo) => html`<label class="chk"><input type="checkbox" checked=${c[k] !== false} onChange=${e => muda({ [k]: e.target.checked })} />${rotulo}</label>`;
+  return html`<${Sheet} title="Aparência do PDF" onClose=${onClose}>
+    <div class="mut" style="margin-bottom:8px">Cada mudança é salva na hora e vale para todos os programas.</div>
+    <h2 style="margin-top:8px">Estilo</h2>
+    ${Object.entries(ESTILOS).map(([k, e]) => html`<div key=${k} class="card click" style=${c.estilo === k ? "outline:2px solid var(--azul)" : ""} onClick=${() => muda({ estilo: k, corTitulo: null, corDestaque: null, corLinha: null })}>
+      <div class="row between"><b>${e.nome}</b><span class="row" style="gap:4px">${[e.t, e.d, e.l].map((x, n) => html`<span key=${n} style=${{ width: 16, height: 16, borderRadius: 8, background: x, display: "inline-block" }}></span>`)}</span></div>
+      <div class="mut">${e.desc}</div></div>`)}
+    <h2>Cores</h2>
+    <div class="card">${cor("corTitulo", "Título e cabeçalho", E.t)}${cor("corDestaque", "Destaques (hinos, nomes, quadros)", E.d)}${cor("corLinha", "Linhas", E.l)}
+      <button class="btn sec sm" style="margin-top:6px" onClick=${() => muda({ corTitulo: null, corDestaque: null, corLinha: null })}>Voltar às cores do estilo</button></div>
+    <h2>Imagem do topo</h2>
+    <div class="card"><div class="mut" style="margin-bottom:6px">Logo ou banner da igreja (PNG ou JPG, até 5 MB).</div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" disabled=${busy} onChange=${enviarLogo} />
+      ${c.logo && html`<button class="btn sec sm" style="margin-top:8px" onClick=${() => muda({ logo: null })}>Usar a imagem padrão</button>`}</div>
+    <h2>O que aparece</h2>
+    <div class="card">${chk("mostrarChegada", "Horário de chegada")}${chk("mostrarFala", "Texto de fala (boas-vindas)")}${chk("mostrarEquipe", "Quadros da equipe do dia")}</div>
+  </${Sheet}>`;
+}
+
 function PrintView({ ev, onClose }) {
   const a = useApp();
   const itens = a.itens.filter(i => i.evento_id === ev.id);
@@ -974,17 +1067,20 @@ function PrintView({ ev, onClose }) {
   const dataTxt = d.toLocaleDateString("pt-BR", { weekday: "long" }).replace("-feira", "") + " " + d.toLocaleDateString("pt-BR").replace(/\//g, ".");
   const meio = Math.ceil(eq.length / 2);
   let sec = null;
+  const [apar, setApar] = useState(false);
+  const c = a.pdf, est = ESTILOS[c.estilo] ? c.estilo : "classico", E = ESTILOS[est];
+  const vars = { "--pt": c.corTitulo || E.t, "--pd": c.corDestaque || E.d, "--pl": c.corLinha || E.l };
   const box = l => l.length > 0 && html`<div class="pb">${l.map(x => html`<div key=${x.id}>${x.funcao}: <span>${x.nome || "________"}</span></div>`)}</div>`;
   return html`<div class="pv">
-    <div class="pvbar"><button class="btn" onClick=${() => window.print()}>🖨 Imprimir / Salvar em PDF</button><button class="btn sec" onClick=${onClose}>Fechar</button></div>
-    <div class="pg">
+    <div class="pvbar"><button class="btn" onClick=${() => window.print()}>🖨 Imprimir / Salvar em PDF</button>${a.isAdmin && html`<button class="btn sec" onClick=${() => setApar(true)}>🎨 Aparência</button>`}<button class="btn sec" onClick=${onClose}>Fechar</button></div>
+    <div class=${"pg est-" + est} style=${vars}>
       <div class="pgh"><div><div class="pt">${ev.titulo}</div><div class="pd">${dataTxt}</div>
-        ${ev.chegada && html`<div class="pc">Recomendação importante:<br /><i>Horário de chegada – ${ev.chegada}H</i></div>`}</div>
-        <img src=${LOGO} alt="" /></div>
+        ${ev.chegada && c.mostrarChegada !== false && html`<div class="pc">Recomendação importante:<br /><i>Horário de chegada – ${ev.chegada}H</i></div>`}</div>
+        <img src=${c.logo || LOGO} alt="" /></div>
       <div class="pcols">${itens.map(i => {
         const cab = i.secao && i.secao !== sec; if (i.secao) sec = i.secao;
         const resp = i.responsavel_id ? a.nome(i.responsavel_id) : i.responsavel_nome;
-        if (i.roteiro) return html`<${React.Fragment} key=${i.id}>${cab && html`<div class="ps">${i.secao}</div>`}
+        if (i.roteiro && c.mostrarFala !== false) return html`<${React.Fragment} key=${i.id}>${cab && html`<div class="ps">${i.secao}</div>`}
           <div class="ps" style="font-size:24px">${i.horario ? i.horario + "H " : ""}${i.titulo}</div>
           <div class="prs">${i.titulo}${i.duracao_min ? ` (${i.duracao_min}’)` : ""} ${resp && html`<span class="pn">${resp}</span>`}</div>
           ${(i.obs || "").split("\n").filter(Boolean).map((l, k) => html`<div key=${k}>${marca(l)}</div>`)}
@@ -993,11 +1089,12 @@ function PrintView({ ev, onClose }) {
           <div class="prow"><div class="phh">${i.horario ? i.horario + "H" : ""}</div><div class="prc">
             <div>${marca(i.titulo)}${i.duracao_min ? ` (${i.duracao_min}’)` : ""}${resp && html` – <span class="pn">${resp}</span>`}</div>
             ${(i.obs || "").split("\n").filter(Boolean).map((l, k) => html`<div key=${k}>${marca(l)}</div>`)}
-            ${i.roteiro && html`<div class="prot">${i.roteiro.split("\n").filter(Boolean).map((l, k) => html`<p key=${k}>${l}</p>`)}</div>`}
+            ${i.roteiro && c.mostrarFala !== false && html`<div class="prot">${i.roteiro.split("\n").filter(Boolean).map((l, k) => html`<p key=${k}>${l}</p>`)}</div>`}
           </div></div></${React.Fragment}>`;
       })}</div>
-      ${eq.length > 0 && html`<div class="pbx">${box(eq.slice(0, meio))}${box(eq.slice(meio))}</div>`}
-    </div></div>`;
+      ${eq.length > 0 && c.mostrarEquipe !== false && html`<div class="pbx">${box(eq.slice(0, meio))}${box(eq.slice(meio))}</div>`}
+    </div>
+    ${apar && html`<${AparenciaForm} onClose=${() => setApar(false)} />`}</div>`;
 }
 
 /* ---------- patrimônio ---------- */
@@ -1151,6 +1248,7 @@ function Perfil() {
   const a = useApp();
   const [f, setF] = useState({ nome: a.me.nome, telefone: a.me.telefone || "" });
   const salvar = e => { e.preventDefault(); a.run(sb.from("profiles").update({ nome: f.nome, telefone: f.telefone || null }).eq("id", a.uid), "Perfil salvo"); };
+  const [apar, setApar] = useState(false);
   return html`
     <form class="card" onSubmit=${salvar} style="margin-top:4px">
       <div class="row between"><h3 style="margin:0">Meus dados</h3><${Chip} k=${a.me.papel} map=${PAPEIS} /></div>
@@ -1159,6 +1257,9 @@ function Perfil() {
       <button class="btn" style="width:100%;margin-top:14px">Salvar</button>
     </form>
     <div class="card"><div class="mut">Minhas equipes</div><div>${a.membros.filter(x => x.profile_id === a.uid).map(x => a.ministerios.find(m => m.id === x.ministerio_id)?.nome).join(", ") || "Nenhuma ainda — peça ao líder para te adicionar."}</div></div>
+    ${a.isAdmin && html`<div class="card"><h3>Aparência do PDF</h3><div class="mut" style="margin-bottom:8px">Estilo, cores e logo do programa impresso. Para ver o resultado enquanto ajusta, abra um evento, clique em "Gerar PDF" e depois em "Aparência".</div>
+      <button class="btn sec" onClick=${() => setApar(true)}>Configurar</button></div>`}
+    ${apar && html`<${AparenciaForm} onClose=${() => setApar(false)} />`}
     <button class="btn err" style="width:100%" onClick=${() => sb.auth.signOut()}>Sair</button>
   `;
 }
