@@ -247,34 +247,48 @@ input,select,textarea{background:#fff;border-color:transparent}
 .est-faixa .ps{color:var(--pt);font-weight:700;font-size:17px;letter-spacing:1.5px}
 .est-faixa .pb{border:0;background:#f1eee6;border-left:5px solid var(--pd);border-radius:8px}
 .est-faixa .pn{background:none;padding:0}
-/* estilo: minimalista */
-.est-minimal .pcols{columns:1!important}
-.pg.est-minimal{font-size:13px;line-height:1.35}
-.est-minimal .prow{padding:3px 0}
-.est-minimal .prot{font-size:12.5px;line-height:1.45}
-.est-minimal .prc{padding-bottom:4px}
-.est-minimal .pgh{border-bottom:2px solid var(--pt);padding-bottom:16px;align-items:flex-end}
-.est-minimal .pgh img{width:110px!important;height:110px;object-fit:cover;border-radius:50%}
-.est-minimal .pt{font-size:34px;font-weight:700}
-.est-minimal .ps{font-size:13px;font-weight:700;letter-spacing:3px;margin-top:22px}
-.est-minimal .prc{border-bottom-width:1px}
-.est-minimal .pn{background:none;padding:0;font-style:normal}
-.est-minimal .pb{border:0;border-top:2px solid var(--pt);border-radius:0;padding:10px 0;font-weight:400}
-.est-minimal .pb span{font-weight:700}
-/* estilo: compacto */
-.pg.est-compacto{font-size:12px;line-height:1.3}
-.est-compacto .pgh{margin-bottom:12px}
-.est-compacto .pgh img{width:26%!important}
-.est-compacto .pt{font-size:28px}
-.est-compacto .pd{font-size:13px;margin-top:4px}
-.est-compacto .pc{font-size:11.5px;margin-top:8px}
-.est-compacto .ps{font-size:13.5px;font-weight:700;margin:10px 0 2px}
-.est-compacto .prow{padding:2px 0}
-.est-compacto .phh{width:50px;font-size:11.5px}
-.est-compacto .prc{border-bottom-width:1px;padding-bottom:3px}
-.est-compacto .prot{font-size:11.5px;line-height:1.4}
-.est-compacto .pbx{margin-top:14px;gap:12px}
-.est-compacto .pb{font-size:11.5px;padding:8px 12px;line-height:1.5;border-width:1px}
+/* marca d'água */
+.pg{position:relative}
+.pg>*:not(.wm){position:relative;z-index:1}
+.wm{position:absolute;left:50%;top:360px;transform:translateX(-50%);width:54%;opacity:.07;pointer-events:none;z-index:0}
+.wm.pad{border-radius:50%}
+/* estilo: linha do tempo */
+.pg.est-tempo{font-size:13px;line-height:1.35}
+.est-tempo .prot{font-size:12.5px;line-height:1.45}
+.est-tempo .pgh{align-items:center;border-bottom:0;margin-bottom:18px}
+.est-tempo .pgh img{width:120px!important;height:120px;object-fit:cover;border-radius:50%}
+.est-tempo .pt{font-size:38px;font-weight:300;letter-spacing:1px}
+.est-tempo .pd{display:inline-block;background:var(--pt);color:#fff;padding:5px 14px;border-radius:999px;font-size:13px;letter-spacing:1.5px;margin-top:12px}
+.est-tempo .pc{margin-top:12px}
+.est-tempo .pcols{columns:1!important;border-left:3px solid var(--pl);margin-left:86px;padding-left:24px}
+.est-tempo .prow{position:relative;padding:3px 0}
+.est-tempo .phh{position:absolute;left:-112px;top:8px;width:70px;text-align:right;font-weight:700;color:var(--pt);font-size:14px}
+.est-tempo .prow::before{content:"";position:absolute;left:-34px;top:9px;width:11px;height:11px;border-radius:50%;background:var(--pd);border:3px solid #fff;box-shadow:0 0 0 1px var(--pl)}
+.est-tempo .prc{border-bottom:0;background:rgba(240,238,232,.85);border-radius:10px;padding:6px 12px}
+.est-tempo .ps{font-size:13px;font-weight:700;letter-spacing:3px;color:var(--pd);margin:22px 0 6px}
+.est-tempo .prs{text-align:left;border-bottom:0;margin-bottom:6px}
+.est-tempo .pn{background:none;padding:0}
+.est-tempo .pbx{display:block;margin-top:12px}
+.est-tempo .pb{border:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;font-size:12px;line-height:1.4}
+.est-tempo .pb>div{background:rgba(240,238,232,.9);border-radius:999px;padding:4px 13px}
+/* estilo: barra lateral */
+.pg.est-lateral{display:grid;grid-template-columns:34% 1fr;grid-template-rows:auto 1fr;align-items:start;padding:0;min-height:1060px;background:linear-gradient(to right,var(--pt) 34%,#fff 34%)}
+.est-lateral .pgh{grid-column:1;grid-row:1;flex-direction:column-reverse!important;align-items:flex-start;gap:18px;padding:30px 24px 0;margin-bottom:0}
+.est-lateral .pgh img{width:116px!important;height:116px;object-fit:cover;border-radius:50%;border:3px solid rgba(255,255,255,.25)}
+.est-lateral .pt{color:#fff;font-size:32px;line-height:1.08}
+.est-lateral .pd{color:var(--pd);font-size:14px;letter-spacing:1.5px;margin-top:10px}
+.est-lateral .pc{color:#fff;opacity:.92;margin-top:20px;font-size:12.5px}
+.est-lateral .pbx{grid-column:1;grid-row:2;grid-template-columns:1fr!important;gap:0;margin-top:26px;padding:0 24px 30px}
+.est-lateral .pb{border:0;border-top:1px solid rgba(255,255,255,.22);border-radius:0;padding:12px 0;color:#fff;font-weight:400;font-size:12.5px;line-height:1.35}
+.est-lateral .pb>div{margin-bottom:8px}
+.est-lateral .pb span{display:block;font-weight:700;font-size:14px}
+.est-lateral .pcols{grid-column:2;grid-row:1/3;columns:1!important;padding:30px 28px}
+.est-lateral .ps{font-size:14px;font-weight:700;letter-spacing:2.5px;color:var(--pt)}
+.est-lateral .pred,.est-lateral .pcols .pn{color:color-mix(in srgb,var(--pd) 70%,#000)}
+.est-lateral .pn{background:none;padding:0}
+.est-lateral .wm{left:67%;width:44%}
+@media(max-width:600px){.pg.est-lateral{display:block;background:#fff}.est-lateral .pgh,.est-lateral .pbx{background:var(--pt)}.est-tempo .pcols{margin-left:60px}.est-tempo .phh{left:-92px;width:54px;font-size:12px}}
+@media print{.wm{position:fixed;top:50%;transform:translate(-50%,-50%)}.pg.est-lateral{display:grid!important;min-height:275mm;background:linear-gradient(to right,var(--pt) 34%,#fff 34%)!important}}
 .pv .sheet-bg{z-index:60}
 .cor{display:flex;align-items:center;justify-content:space-between;padding:6px 0}
 .cor input{width:56px;height:36px;padding:2px;border:1px solid var(--borda);border-radius:8px}
@@ -315,8 +329,8 @@ const PROGRAMA_PADRAO = ["Prelúdio", "Boas-vindas", "Hino de abertura", "Oraç�
 const ESTILOS = {
   classico: { nome: "Clássico", desc: "Duas colunas, linhas salmão e destaques vermelhos", t: "#1f1a5c", d: "#e01010", l: "#f4b9a4" },
   faixa: { nome: "Faixa escura", desc: "Cabeçalho em faixa azul-marinho, detalhes dourados", t: "#17274a", d: "#b08a45", l: "#d9d2c2" },
-  minimal: { nome: "Minimalista", desc: "Uma coluna, preto e branco, sem molduras", t: "#111111", d: "#111111", l: "#bbbbbb" },
-  compacto: { nome: "Compacto", desc: "Letra pequena, para programas longos caberem em uma página", t: "#17274a", d: "#c0392b", l: "#cccccc" },
+  tempo: { nome: "Linha do tempo", desc: "Horários numa linha vertical com marcadores, equipe em etiquetas e marca d'água", t: "#1d3b53", d: "#e8623d", l: "#cfd8de", marca: true },
+  lateral: { nome: "Barra lateral", desc: "Faixa escura à esquerda com logo, data e equipe; programa à direita, com marca d'água", t: "#17274a", d: "#c9a45c", l: "#e3e0d8", marca: true },
 };
 const FUNCOES_PADRAO = ["ANCIÃO DO MÊS", "ANCIÃO DO DIA", "GESTÃO DE CULTO", "MIN. DE LOUVOR", "MENSAGEM MUSICAL", "MÍDIA", "SOM"];
 const SECOES_PADRAO = ["08:45 BOAS-VINDAS", "09:00 ESCOLA SABATINA", "10:00 CULTO DIVINO"];
@@ -1031,12 +1045,12 @@ function AparenciaForm({ onClose }) {
     if (error) return a.notify(error.message, true);
     await a.load();
   }
-  async function enviarLogo(e) {
+  async function enviarLogo(e, campo = "logo") {
     const f = e.target.files[0]; if (!f) return; setBusy(true);
-    const path = `logo-${Date.now()}.${(f.name.split(".").pop() || "png").toLowerCase()}`;
+    const path = `${campo}-${Date.now()}.${(f.name.split(".").pop() || "png").toLowerCase()}`;
     const up = await sb.storage.from("publico").upload(path, f, { contentType: f.type });
     if (up.error) a.notify(up.error.message, true);
-    else { await muda({ logo: sb.storage.from("publico").getPublicUrl(path).data.publicUrl }); a.notify("Imagem trocada"); }
+    else { await muda({ [campo]: sb.storage.from("publico").getPublicUrl(path).data.publicUrl }); a.notify("Imagem trocada"); }
     setBusy(false);
   }
   const cor = (k, rotulo, padrao) => html`<div class="cor"><span>${rotulo}</span><input type="color" value=${c[k] || padrao} onChange=${e => muda({ [k]: e.target.value })} /></div>`;
@@ -1044,7 +1058,7 @@ function AparenciaForm({ onClose }) {
   return html`<${Sheet} title="Aparência do PDF" onClose=${onClose}>
     <div class="mut" style="margin-bottom:8px">Cada mudança é salva na hora e vale para todos os programas.</div>
     <h2 style="margin-top:8px">Estilo</h2>
-    ${Object.entries(ESTILOS).map(([k, e]) => html`<div key=${k} class="card click" style=${c.estilo === k ? "outline:2px solid var(--azul)" : ""} onClick=${() => muda({ estilo: k, corTitulo: null, corDestaque: null, corLinha: null })}>
+    ${Object.entries(ESTILOS).map(([k, e]) => html`<div key=${k} class="card click" style=${c.estilo === k ? "outline:2px solid var(--azul)" : ""} onClick=${() => muda({ estilo: k, corTitulo: null, corDestaque: null, corLinha: null, marca: null })}>
       <div class="row between"><b>${e.nome}</b><span class="row" style="gap:4px">${[e.t, e.d, e.l].map((x, n) => html`<span key=${n} style=${{ width: 16, height: 16, borderRadius: 8, background: x, display: "inline-block" }}></span>`)}</span></div>
       <div class="mut">${e.desc}</div></div>`)}
     <h2>Cores</h2>
@@ -1054,6 +1068,11 @@ function AparenciaForm({ onClose }) {
     <div class="card"><div class="mut" style="margin-bottom:6px">Logo ou banner da igreja (PNG ou JPG, até 5 MB).</div>
       <input type="file" accept="image/png,image/jpeg,image/webp" disabled=${busy} onChange=${enviarLogo} />
       ${c.logo && html`<button class="btn sec sm" style="margin-top:8px" onClick=${() => muda({ logo: null })}>Usar a imagem padrão</button>`}</div>
+    <h2>Marca d'água</h2>
+    <div class="card"><label class="chk"><input type="checkbox" checked=${c.marca ?? !!E.marca} onChange=${e => muda({ marca: e.target.checked })} />Mostrar marca d'água no fundo</label>
+      <div class="mut" style="margin:4px 0 6px">Imagem própria (de preferência PNG com fundo transparente). Sem ela, usa a logo da igreja.</div>
+      <input type="file" accept="image/png,image/jpeg,image/webp" disabled=${busy} onChange=${e => enviarLogo(e, "marcaImg")} />
+      ${c.marcaImg && html`<button class="btn sec sm" style="margin-top:8px" onClick=${() => muda({ marcaImg: null })}>Usar a logo da igreja</button>`}</div>
     <h2>O que aparece</h2>
     <div class="card">${chk("mostrarChegada", "Horário de chegada")}${chk("mostrarFala", "Texto de fala (boas-vindas)")}${chk("mostrarEquipe", "Quadros da equipe do dia")}</div>
   </${Sheet}>`;
@@ -1070,10 +1089,12 @@ function PrintView({ ev, onClose }) {
   const [apar, setApar] = useState(false);
   const c = a.pdf, est = ESTILOS[c.estilo] ? c.estilo : "classico", E = ESTILOS[est];
   const vars = { "--pt": c.corTitulo || E.t, "--pd": c.corDestaque || E.d, "--pl": c.corLinha || E.l };
+  const temMarca = c.marca ?? !!E.marca;
   const box = l => l.length > 0 && html`<div class="pb">${l.map(x => html`<div key=${x.id}>${x.funcao}: <span>${x.nome || "________"}</span></div>`)}</div>`;
   return html`<div class="pv">
     <div class="pvbar"><button class="btn" onClick=${() => window.print()}>🖨 Imprimir / Salvar em PDF</button>${a.isAdmin && html`<button class="btn sec" onClick=${() => setApar(true)}>🎨 Aparência</button>`}<button class="btn sec" onClick=${onClose}>Fechar</button></div>
     <div class=${"pg est-" + est} style=${vars}>
+      ${temMarca && html`<img class=${"wm" + (c.marcaImg ? "" : " pad")} src=${c.marcaImg || LOGO2} alt="" />`}
       <div class="pgh"><div><div class="pt">${ev.titulo}</div><div class="pd">${dataTxt}</div>
         ${ev.chegada && c.mostrarChegada !== false && html`<div class="pc">Recomendação importante:<br /><i>Horário de chegada – ${ev.chegada}H</i></div>`}</div>
         <img src=${c.logo || LOGO} alt="" /></div>
